@@ -20,8 +20,11 @@ function solveEquation(a, b, c) {
 
 function calculateTotalMortgage(percent, contribution, amount, date) {
     let totalAmount;
-
+    let body = amount - contribution;
+    let p = percent / 100;
+    let Payment = body * (p / 12 + ((p / 12) / (((1 + p / 12) ** date) - 1)));
+    totalAmount = date * Payment;
     // код для задачи №2 писать здесь
 
-    return totalAmount;
+    return totalAmount.toFixed(2);
 }
