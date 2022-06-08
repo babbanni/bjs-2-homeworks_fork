@@ -21,10 +21,13 @@ function solveEquation(a, b, c) {
 function calculateTotalMortgage(percent, contribution, amount, date) {
     let totalAmount;
     let body = amount - contribution;
-    let p = percent / 100;
-    let Payment = body * (p / 12 + ((p / 12) / (((1 + p / 12) ** date) - 1)));
-    totalAmount = date * Payment;
+    let p = percent / 100 / 12;
+    let startDate = new Date;
+    let months = (date.getFullYear() - startDate.getFullYear()) * 12;
+    months -= startDate.getMonth();
+    months += date.getMonth();
+    let Payment = body * (p + (p / (((1 + p) ** months) - 1)));
+    totalAmount = months * Payment;
     // код для задачи №2 писать здесь
-
     return totalAmount.toFixed(2);
 }
