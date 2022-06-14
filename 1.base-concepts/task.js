@@ -15,6 +15,9 @@ function solveEquation(a, b, c) {
 
 
 function calculateTotalMortgage(percent, contribution, amount, date) {
+    if (isNaN(percent)) return `Параметр "Процентная ставка" содержит неправильное значение "${percent}"`;
+    if (isNaN(contribution)) return `Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`;
+    if (isNaN(amount)) return `Параметр "Общая стоимость" содержит неправильное значение "${amount}"`;
     let totalAmount;
     let body = amount - contribution;
     let p = percent / 100 / 12;
