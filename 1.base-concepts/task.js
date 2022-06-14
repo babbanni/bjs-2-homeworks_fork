@@ -3,8 +3,6 @@
 function solveEquation(a, b, c) {
     let arr = [];
     // код для задачи №1 писать здесь
-    let x;
-    let y;
     let d = b ** 2 - 4 * a * c;
     if (d === 0) {
         arr.push(-b / (2 * a));
@@ -26,6 +24,7 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
     months += date.getMonth();
     let payment = body * (p + (p / (((1 + p) ** months) - 1)));
     totalAmount = months * payment;
+
     // код для задачи №2 писать здесь
     return Number(totalAmount.toFixed(2));
 }
