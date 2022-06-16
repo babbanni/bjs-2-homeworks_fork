@@ -45,5 +45,17 @@ function makeWork(arrOfArr, func) {
 
 // Задание 3
 function worker2(arr) {
-    // Ваш код
+    let sum = 0;
+    let max = Math.max(...arr);
+    let min = Math.min(...arr);
+    let result = max - min;
+    for (let i = 0; i < arr.length; i++) {
+        sum += arr[i];
+        if (sum > max) {
+            max === sum;
+        } else if (sum < max) {
+            min === sum;
+        }
+    }
+    return Math.abs(result)
 }
