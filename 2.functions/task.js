@@ -1,4 +1,6 @@
 // Задание 1
+"use strict";
+
 function getArrayParams(arr) {
     let min, max, sum, avg;
     min = Math.min(...arr);
@@ -20,20 +22,25 @@ function getArrayParams(arr) {
 
 // Задание 2
 function worker(arr) {
-    let sum;
-
+    let sum = 0;
+    for (let i = 0; i < arr.length; i++) {
+        sum += arr[i];
+    }
     // Ваш код
 
     return sum;
 }
 
 function makeWork(arrOfArr, func) {
-    let max;
+    let max = 0;
+    for (let i = 0; i < arrOfArr.length; i++) {
+        func(arrOfArr[i])
+        if (func(arrOfArr[i]) > max) {
+            max = func(arrOfArr[i]);
 
-    // Ваш кода
-    // for ...
-
-    return max;
+        }
+    }
+    return max
 }
 
 // Задание 3
