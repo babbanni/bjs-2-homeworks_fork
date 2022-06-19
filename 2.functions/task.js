@@ -2,22 +2,14 @@
 "use strict";
 
 function getArrayParams(arr) {
-    let min, max, sum, avg;
-    min = Math.min(...arr);
-    max = Math.max(...arr);
+    let sum, avg;
     sum = 0;
     for (let i = 0; i < arr.length; i++) {
         sum += arr[i];
-        avg = sum / arr.length;
-        if (arr[i] > max) {
-            max === arr[i];
-        } else if (arr[i] < min) {
-            min === arr[i];
-        }
     }
     // Ваш код
-
-    return { min: min, max: max, avg: Number(avg.toFixed(2)) };
+    avg = sum / arr.length;
+    return { min: Math.min(...arr), max: Math.max(...arr), avg: Number(avg.toFixed(2)) };
 }
 
 // Задание 2
@@ -34,9 +26,9 @@ function worker(arr) {
 function makeWork(arrOfArr, func) {
     let max = 0;
     for (let i = 0; i < arrOfArr.length; i++) {
-        func(arrOfArr[i])
-        if (func(arrOfArr[i]) > max) {
-            max = func(arrOfArr[i]);
+        const funcResult = func(arrOfArr[i]);
+        if (funcResult > max) {
+            max = funcResult;
 
         }
     }
@@ -45,17 +37,6 @@ function makeWork(arrOfArr, func) {
 
 // Задание 3
 function worker2(arr) {
-    let sum = 0;
-    let max = Math.max(...arr);
-    let min = Math.min(...arr);
-    let result = max - min;
-    for (let i = 0; i < arr.length; i++) {
-        sum += arr[i];
-        if (sum > max) {
-            max === sum;
-        } else if (sum < max) {
-            min === sum;
-        }
-    }
-    return Math.abs(result)
+
+    return Math.abs(Math.max(...arr) - Math.min(...arr))
 }
