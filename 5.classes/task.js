@@ -63,15 +63,14 @@ class DetectiveBook extends Book {
     }
 }
 
-class Library extends Book {
-    constructor(name, books = [], state) {
-        super(state);
+class Library {
+    constructor(name, books = []) {
         this.name = name;
         this.books = books;
     }
 
     addBook(book) {
-        if (this.state > 30) {
+        if (book.state > 30) {
             this.books.push(book);
         }
     }
@@ -96,3 +95,45 @@ class Library extends Book {
         return null
     }
 }
+
+class Student {
+    constructor(name, gender, age) {
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
+        this.marks = {};
+    }
+
+    setSubject(subjectName) {
+        this.marks[subjectName] = subjectName;
+    }
+
+    addMark(mark, subjectName) {
+        if (mark < 1 || mark > 5) {
+            return "Ошибка, оценка должна быть числом от 1 до 5"
+        }
+
+        if (this.marks[subjectName] === undefined) {
+            this.marks[subjectName] = [];
+        }
+        this.marks[subjectName].push(mark);
+    }
+
+    getAverage() {}
+
+    exclude(reason) {
+        delete this.subject;
+        delete this.marks;
+        this.excluded = reason;
+    }
+
+    getAverageBySubject(subjectName) {
+        let sum = 0;
+        for (let i = 0; i < this.marks[subjectName].length; i++) {
+            sum += this.marks[subjectName][i];
+        }
+        return (sum / this.marks[subjectName].length)
+    }
+}
+
+const student = new Student("Олег Никифоров");
