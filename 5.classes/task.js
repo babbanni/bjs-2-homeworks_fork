@@ -119,20 +119,26 @@ class Student {
         this.marks[subjectName].push(mark);
     }
 
-    getAverage() {}
-
-    exclude(reason) {
-        delete this.subject;
-        delete this.marks;
-        this.excluded = reason;
-    }
-
     getAverageBySubject(subjectName) {
         let sum = 0;
         for (let i = 0; i < this.marks[subjectName].length; i++) {
             sum += this.marks[subjectName][i];
         }
         return (sum / this.marks[subjectName].length)
+    }
+
+    getAverage() {
+        let sum = 0;
+        for (let item in this.marks) {
+            sum += this.getAverageBySubject(item);
+        }
+        return sum / Object.keys(this.marks).length
+    }
+
+    exclude(reason) {
+        delete this.subject;
+        delete this.marks;
+        this.excluded = reason;
     }
 }
 
