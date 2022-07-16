@@ -5,18 +5,12 @@ class AlarmClock {
     }
 
     addClock(time, callback, id) {
-        let currentDate = Date.now();
-        let timeDate = time.getTime;
-        let timeMsDate = timeDate - currentDate;
-
-        setTimeout(() => callback, timeMsDate);
-
         if (!id) {
             throw new Error('error text');
         }
 
         if (this.alarmCollection.some(call => call.id === id)) {
-            console.error();
+            console.error('Звонок уже существует');
             return
         }
 
@@ -24,12 +18,10 @@ class AlarmClock {
     }
 
     removeClock(id) {
-        if (this.alarmCollection.filter(call => call.id === id)) {
-            this.alarmCollection.splice(this.alarmCollection.filter(call => call.id === id), 1);
-            return true
-        }
+        const arrayLength = this.alarmCollection.length;
+        this.alarmCollection = this.alarmCollection.filter(alarm => alarm.id !== id);
 
-        return false
+        return arrayLength === this.alarmCollection.length
     }
 
     getCurrentFormattedTime() {
@@ -59,7 +51,7 @@ class AlarmClock {
     }
 
     clearAlarms() {
-        stop()
-        this.alarmCollection.splice(0, this.alarmCollection.length);
+        this.stop()
+        this.alarmCollection = [];
     }
 }
