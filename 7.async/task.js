@@ -21,7 +21,7 @@ class AlarmClock {
         const arrayLength = this.alarmCollection.length;
         this.alarmCollection = this.alarmCollection.filter(alarm => alarm.id !== id);
 
-        return arrayLength === this.alarmCollection.length
+        return arrayLength !== this.alarmCollection.length
     }
 
     getCurrentFormattedTime() {
