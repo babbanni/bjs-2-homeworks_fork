@@ -4,7 +4,7 @@ function cachingDecoratorNew(func) {
     function wrapper(...args) {
         const hash = args.join(',');
         let objectInCache = cache.find((item) => item.hash === hash);
-        if (!!objectInCache) {
+        if (objectInCache) {
             return `Из кэша: ${objectInCache.result}`;
         }
 
@@ -21,12 +21,17 @@ function cachingDecoratorNew(func) {
 
 function debounceDecoratorNew(func, delay) {
     let flag = false;
-    return function() {
-        if (flag === true) {
+    let timeoutId = null;
+    return function(...args) {
+        if (flag) {
             console.log('проигнорировано, флаг поднят');
-            return;
+            return
         }
-        func();
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        timeoutId = setTimeout(() => timeoutId = null, 2000);
+        func(...args);
         flag = true;
         setTimeout(() => flag = false, delay)
     }
@@ -38,13 +43,20 @@ const upgradedSendSignal = debounceDecorator2(sendSignal, 5000);
 function debounceDecorator2(func, delay) {
     let flag = false;
     let count = 0;
-    return function wrapper() {
-        if (flag === true) {
+    let timeoutId = null;
+    return function wrapper(...args) {
+        debugger
+        wrapper.count = 0;
+        if (flag) {
             console.log('проигнорировано, флаг поднят');
             return;
         }
-        func();
-        count += 1;
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        timeoutId = setTimeout(() => timeoutId = null, 2000);
+        func(...args);
+        count++;
         wrapper.count = count;
         flag = true;
         setTimeout(() => flag = false, delay);
