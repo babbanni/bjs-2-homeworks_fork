@@ -9,7 +9,7 @@ function cachingDecoratorNew(func) {
         }
 
         let result = func(...args);
-        cache.push({ hash: `${hash}`, result: `${result}` });
+        cache.push({ hash, result });
         if (cache.length > 5) {
             cache.shift();
         }
@@ -24,16 +24,16 @@ function debounceDecoratorNew(func, delay) {
     let timeoutId = null;
     return function(...args) {
         if (flag) {
-            console.log('проигнорировано, флаг поднят');
             return
         }
         if (timeoutId) {
             clearTimeout(timeoutId);
         }
-        timeoutId = setTimeout(() => timeoutId = null, 2000);
-        func(...args);
-        flag = true;
-        setTimeout(() => flag = false, delay)
+        setTimeout(() => {
+            timeoutId = null;
+            func(...args);
+            flag = true;
+        }, delay);
     }
 }
 
@@ -45,21 +45,18 @@ function debounceDecorator2(func, delay) {
     let count = 0;
     let timeoutId = null;
     return function wrapper(...args) {
-        debugger
         wrapper.count = 0;
-        if (flag) {
-            console.log('проигнорировано, флаг поднят');
-            return;
-        }
         if (timeoutId) {
             clearTimeout(timeoutId);
         }
-        timeoutId = setTimeout(() => timeoutId = null, 2000);
-        func(...args);
-        count++;
-        wrapper.count = count;
-        flag = true;
-        setTimeout(() => flag = false, delay);
-        console.log(`Сигналов отправлено всего: ${wrapper.count}`);
+        if (!flag) {
+            setTimeout(() => {
+                func(...args);
+                count++;
+                wrapper.count = count;
+                flag = true;
+            }, delay)
+        }
+        return `Сигналов отправлено всего: ${wrapper.count}`;
     }
 }
