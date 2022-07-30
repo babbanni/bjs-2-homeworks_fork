@@ -23,18 +23,15 @@ function debounceDecoratorNew(func, delay) {
     let flag = false;
     let timeoutId = null;
     return function(...args) {
-        if (flag) {
-            return
-        }
-        if (timeoutId) {
-            clearTimeout(timeoutId);
-        }
-        setTimeout(() => {
-            timeoutId = null;
+        if (!flag) {
             func(...args);
             flag = true;
+        }
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            func(...args);
         }, delay);
-    }
+    };
 }
 
 const sendSignal = () => console.log("Сигнал отправлен");
@@ -42,21 +39,21 @@ const upgradedSendSignal = debounceDecorator2(sendSignal, 5000);
 
 function debounceDecorator2(func, delay) {
     let flag = false;
-    let count = 0;
     let timeoutId = null;
-    return function wrapper(...args) {
-        wrapper.count = 0;
-        if (timeoutId) {
-            clearTimeout(timeoutId);
-        }
+    wrapper.count = 0;
+
+    function wrapper(...args) {
         if (!flag) {
-            setTimeout(() => {
-                func(...args);
-                count++;
-                wrapper.count = count;
-                flag = true;
-            }, delay)
+            func(...args);
+            flag = true;
+            wrapper.count++;
         }
-        return `Сигналов отправлено всего: ${wrapper.count}`;
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            func(...args);
+            wrapper.count++;
+            return console.log("Сигналов отправлено всего: " + wrapper.count);
+        }, delay);
     }
+    return wrapper;
 }
